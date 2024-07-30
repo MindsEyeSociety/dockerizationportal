@@ -1,0 +1,13 @@
+
+#
+# START: mindseyesociety/dockerization dev projects hosts
+#
+
+172.16.70.11 mail.mindseyesociety.dock
+172.16.70.12 portal.mindseyesociety.dock
+172.16.70.13 fpm.mindseyesociety.dock
+172.16.70.14 db.mindseyesociety.dock
+
+#
+# END: mindseyesociety/dockerization dev projects hosts
+#
