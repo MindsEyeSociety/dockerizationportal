@@ -1,0 +1,65 @@
+FROM ubuntu:20.04
+
+ENV TERM xterm
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+ENV TZ=Europe/Warsaw
+# saves time with confirmation of keyboard for xvfb installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Updating base software repository and adding ondrej repo
+
+RUN apt update && \
+    apt install -y software-properties-common && \
+    add-apt-repository ppa:ondrej/php -y && \
+    apt update
+
+# Installing PHP - basics
+# FYI if that fails, most probably there is a slightly newer version available and this one is outdated
+# ./console r ...
+# instead of
+# ./console b ...
+
+# Installing git zip 7z (for some composer repos)
+RUN apt install -y git zip p7zip-full
+
+RUN apt install -y php7.4 php7.4-common php7.4-cli php7.4-fpm
+
+# Installing PHP - modules
+RUN apt install -y php7.4-curl php7.4-json php7.4-mcrypt php7.4-mysql php7.4-opcache php7.4-readline php7.4-xml php7.4-zip
+
+# # Installing other dependencies
+# RUN apt install -y wkhtmltopdf xvfb
+
+# Installing mysql-client (for some automation)
+RUN apt install -y mysql-client
+
+# Installing composer
+RUN apt install -y wget
+RUN cd /root && \
+    wget https://getcomposer.org/download/latest-2.2.x/composer.phar && \
+    #wget https://getcomposer.org/download/1.10.27/composer.phar && \
+    chmod a+x composer.phar && \
+    mv composer.phar /usr/bin/composer
+
+# Clean UP
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Fixing FPM configuration and process file requirement
+RUN sed -i "s/^listen = .*/listen = 172.16.70.13:9000/g" /etc/php/7.4/fpm/pool.d/www.conf && \
+    mkdir /run/php && \
+    chmod 755 /run/php
+
+RUN sed -i "s/^post_max_size = .*/post_max_size = 10M/g" /etc/php/7.4/fpm/php.ini && \
+    sed -i "s/^upload_max_filesize = .*/upload_max_filesize = 10M/g" /etc/php/7.4/fpm/php.ini
+
+RUN sed -i 's/^error_reporting = .*/error_reporting = E_ALL/' /etc/php/7.4/fpm/php.ini && \
+    sed -i 's/^display_errors = .*/display_errors = On/'  /etc/php/7.4/fpm/php.ini && \
+    sed -i 's/^log_errors = .*/log_errors = On/'  /etc/php/7.4/fpm/php.ini && \
+    sed -i 's/;error_log = syslog/error_log = \/var\/log\/php7.4-fpm.log/' /etc/php/7.4/fpm/php.ini
+
+WORKDIR /portal
+
+ENTRYPOINT ["/usr/sbin/php-fpm7.4", "-F"]
+# ENTRYPOINT ["tail", "-f", "/dev/null"] # Use this for resolution of issues

@@ -1,0 +1,6 @@
+env=dev
+resetdata=0
+MAIL_HOST=mail.mindseyesociety.dock
+MAIL_PORT=1025
+MAIL_USERNAME=
+MAIL_PASSWORD=
