@@ -23,10 +23,12 @@ done
 cd ..
 cd ..
 
-#composer install
+composer install
 #composer dump-autoload
 
-#cd app
-./console migrations-migrate
+cd app
+./console doctrine:migrations:migrate
+./console assets:instal
+./console assetic:dump
 
 echo "< /docker/install.sh - END"

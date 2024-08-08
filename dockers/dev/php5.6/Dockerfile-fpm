@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:24.04
 
 ENV TERM xterm
 ENV LANG C.UTF-8
@@ -16,6 +16,7 @@ RUN apt update && \
 
 # Installing PHP - basics
 # FYI if that fails, most probably there is a slightly newer version available and this one is outdated
+# use rebuild instead of build 
 # ./console r ...
 # instead of
 # ./console b ...
@@ -28,9 +29,6 @@ RUN apt install -y php5.6 php5.6-common php5.6-cli php5.6-fpm
 # Installing PHP - modules
 RUN apt install -y php5.6-curl php5.6-json php5.6-mcrypt php5.6-mysql php5.6-opcache php5.6-readline php5.6-xml php5.6-zip
 
-# # Installing other dependencies
-# RUN apt install -y wkhtmltopdf xvfb
-
 # Installing mysql-client (for some automation)
 RUN apt install -y mysql-client
 
@@ -38,9 +36,17 @@ RUN apt install -y mysql-client
 RUN apt install -y wget
 RUN cd /root && \
     wget https://getcomposer.org/download/latest-2.2.x/composer.phar && \
-    #wget https://getcomposer.org/download/1.10.27/composer.phar && \
     chmod a+x composer.phar && \
     mv composer.phar /usr/bin/composer
+
+# We need Ruby and compass for assetic dump in Symfony 2
+
+RUN apt install -y ruby ruby-dev
+RUN gem install compass
+
+# We need to fix compass installation it has errors (some methods are not supported in new Ruby)
+RUN cd /var/lib/gems/3.2.0/gems/compass-1.0.3/lib/compass
+RUN for i in `find -name '*rb'`; do sed -i 's/File.exists/File.exist/g' $i; done
 
 # Clean UP
 RUN apt-get clean && \
@@ -48,8 +54,7 @@ RUN apt-get clean && \
 
 # Fixing FPM configuration and process file requirement
 RUN sed -i "s/^listen = .*/listen = 172.16.70.13:9000/g" /etc/php/5.6/fpm/pool.d/www.conf && \
-    mkdir /run/php && \
-    chmod 755 /run/php
+    if [! -d /run/php]; then mkdir /run/php; chmod 755 /run/php; fi
 
 RUN sed -i "s/^post_max_size = .*/post_max_size = 10M/g" /etc/php/5.6/fpm/php.ini && \
     sed -i "s/^upload_max_filesize = .*/upload_max_filesize = 10M/g" /etc/php/5.6/fpm/php.ini
