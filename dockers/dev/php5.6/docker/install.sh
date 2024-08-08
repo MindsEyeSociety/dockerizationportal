@@ -28,7 +28,7 @@ composer install
 
 cd app
 ./console doctrine:migrations:migrate
-./console assets:instal
+./console assets:install
 ./console assetic:dump
 
 echo "< /docker/install.sh - END"
