@@ -3,10 +3,18 @@
 # START: mindseyesociety/dockerization dev projects hosts
 #
 
+# mail
 172.16.70.11 mail.mindseyesociety.dock
-172.16.70.12 portal.mindseyesociety.dock
-172.16.70.13 fpm.mindseyesociety.dock
-172.16.70.14 db.mindseyesociety.dock
+
+# MES-portal
+172.16.70.12 old.portal.mindseyesociety.dock
+172.16.70.13 old.fpm.mindseyesociety.dock
+172.16.70.14 old.db.mindseyesociety.dock
+
+# symfonyportal
+172.16.70.15 new.portal.mindseyesociety.dock
+172.16.70.16 new.fpm.mindseyesociety.dock
+172.16.70.17 new.db.mindseyesociety.dock
 
 #
 # END: mindseyesociety/dockerization dev projects hosts
