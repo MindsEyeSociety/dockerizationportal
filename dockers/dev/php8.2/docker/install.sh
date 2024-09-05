@@ -4,6 +4,9 @@ echo "> /docker/install.sh - BEGIN"
 
 cd /portal
 
+echo "< /docker/install.sh - NOTHING DONE END (TO BE DEV)"
+exit 1
+
 cd app/config
 
 # Check if app/config/parameters.yml exists
@@ -23,10 +26,12 @@ done
 cd ..
 cd ..
 
-#composer install
+composer install
 #composer dump-autoload
 
-#cd app
-./console migrations-migrate
+cd app
+./console doctrine:migrations:migrate
+./console assets:install
+./console assetic:dump
 
 echo "< /docker/install.sh - END"

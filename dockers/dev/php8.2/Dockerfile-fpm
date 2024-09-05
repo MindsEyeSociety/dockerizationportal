@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:24.04
 
 ENV TERM xterm
 ENV LANG C.UTF-8
@@ -16,6 +16,7 @@ RUN apt update && \
 
 # Installing PHP - basics
 # FYI if that fails, most probably there is a slightly newer version available and this one is outdated
+# use rebuild instead of build 
 # ./console r ...
 # instead of
 # ./console b ...
@@ -48,8 +49,7 @@ RUN apt-get clean && \
 
 # Fixing FPM configuration and process file requirement
 RUN sed -i "s/^listen = .*/listen = 172.16.70.13:9000/g" /etc/php/8.2/fpm/pool.d/www.conf && \
-    mkdir /run/php && \
-    chmod 755 /run/php
+    if [! -d /run/php]; then mkdir /run/php; chmod 755 /run/php; fi
 
 RUN sed -i "s/^post_max_size = .*/post_max_size = 10M/g" /etc/php/8.2/fpm/php.ini && \
     sed -i "s/^upload_max_filesize = .*/upload_max_filesize = 10M/g" /etc/php/8.2/fpm/php.ini
