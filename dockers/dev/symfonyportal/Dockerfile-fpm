@@ -48,7 +48,7 @@ RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Fixing FPM configuration and process file requirement
-RUN sed -i "s/^listen = .*/listen = 172.16.70.13:9000/g" /etc/php/8.2/fpm/pool.d/www.conf && \
+RUN sed -i "s/^listen = .*/listen = 172.16.70.16:9000/g" /etc/php/8.2/fpm/pool.d/www.conf && \
     if [! -d /run/php]; then mkdir /run/php; chmod 755 /run/php; fi
 
 RUN sed -i "s/^post_max_size = .*/post_max_size = 10M/g" /etc/php/8.2/fpm/php.ini && \
