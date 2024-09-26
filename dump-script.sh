@@ -62,7 +62,7 @@ done
 mysqldump -u"$USER" -p"$PASSWORD" -h"$HOST" --no-create-info "$DBNAME" \
 AccessToken Affiliate AuthCode Authorization Claim Client RefreshToken \
 Renewal Transaction User UserNotificationsSet UserRolesSet credits \
-ext_log_entries financial_transactions fixed_expirations payment_instructions \
+ext_log_entries financial_transactions payment_instructions \
 payments > "$FILENAME"
 
 # Inform user of the dump completion
