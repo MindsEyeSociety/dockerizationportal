@@ -59,7 +59,7 @@ while [[ "$#" -gt 0 ]]; do
 done
 
 # Execute mysqldump
-mysqldump -u"$USER" -p"$PASSWORD" -h"$HOST" --no-create-info "$DBNAME" \
+mysqldump -u"$USER" -p"$PASSWORD" -h"$HOST" --no-create-info --complete-insert "$DBNAME" \
 AccessToken Affiliate AuthCode Authorization Claim Client RefreshToken \
 Renewal Transaction User UserNotificationsSet UserRolesSet credits \
 ext_log_entries financial_transactions payment_instructions \
