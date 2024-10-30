@@ -9,6 +9,8 @@ DEFAULT_FILENAME="dump-old-latest-tables-data.sql"
 
 # Function to display help
 display_help() {
+    echo "Important: This script is a way to help migrate data between new symfonyportal (to) and old MES-Portal (from) projects."
+    echo 
     echo "Usage: ./dump_data.sh [options] dump"
     echo
     echo "Options:"
