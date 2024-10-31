@@ -16,6 +16,11 @@
 172.16.70.16 new.fpm.mindseyesociety.dock
 172.16.70.17 new.db.mindseyesociety.dock
 
+# portal2024
+172.16.70.25 portal2024.mindseyesociety.dock
+172.16.70.26 api.portal2024.mindseyesociety.dock
+172.16.70.27 db.portal2024.mindseyesociety.dock
+
 #
 # END: mindseyesociety/dockerization dev projects hosts
 #

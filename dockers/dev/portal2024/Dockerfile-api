@@ -1,0 +1,39 @@
+FROM ubuntu:24.04
+
+ENV TERM xterm
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+ENV TZ=Europe/Warsaw
+# saves time with confirmation of keyboard for xvfb installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Updating base software repository and adding ondrej repo
+
+RUN apt update && \
+    apt install -y software-properties-common && \
+    apt update
+
+# tail CMD was missing
+RUN apt-get install -y procps
+
+# Installing git zip 7z (for some composer repos)
+RUN apt install -y git zip p7zip-full
+
+# Installing mysql-client (for some automation)
+RUN apt install -y mysql-client
+
+# Installing node and npm
+RUN apt install -y curl
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash
+RUN apt install -y nodejs
+
+# Clean UP
+#RUN apt-get clean && \
+#    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /portal2024
+
+# ENTRYPOINT ["/usr/sbin/php-fpm8.2", "-F"]
+# Use this for resolution of issues
+ENTRYPOINT ["tail", "-f", "/dev/null"]
+
