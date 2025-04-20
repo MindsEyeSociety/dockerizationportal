@@ -1,8 +1,8 @@
 FROM ubuntu:24.04
 
-ENV TERM xterm
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
+ENV TERM=xterm
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
 ENV TZ=Europe/Warsaw
 # saves time with confirmation of keyboard for xvfb installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -27,13 +27,18 @@ RUN apt install -y curl
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash
 RUN apt install -y nodejs
 
+RUN apt install -y nginx
+
 # Clean UP
 #RUN apt-get clean && \
 #    rm -rf /var/lib/apt/lists/*
 
-WORKDIR /portal2024
+COPY nginx-config-api.conf /etc/nginx/conf.d/default.conf
 
-# ENTRYPOINT ["/usr/sbin/php-fpm8.2", "-F"]
+WORKDIR /portal2024/MES-portal-backend
+
+ENTRYPOINT ["/usr/sbin/nginx", "-g", "daemon off;"]
+
 # Use this for resolution of issues
-ENTRYPOINT ["tail", "-f", "/dev/null"]
+# ENTRYPOINT ["tail", "-f", "/dev/null"]
 
