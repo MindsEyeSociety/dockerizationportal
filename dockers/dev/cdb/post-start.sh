@@ -1,7 +1,7 @@
 #!/bin/sh
 
-docker exec -d mes_portal2024_web_1 sh -c "sh /docker/tmp/fix-hosts.sh"
-docker exec -d mes_portal2024_api_1 sh -c "sh /docker/tmp/fix-hosts.sh"
-docker exec -d mes_portal2024_db_1 sh -c "sh /docker/tmp/fix-hosts.sh"
+docker exec -d mes_cdb_web_1 sh -c "sh /docker/tmp/fix-hosts.sh"
+docker exec -d mes_cdb_api_1 sh -c "sh /docker/tmp/fix-hosts.sh"
+docker exec -d mes_cdb_db_1 sh -c "sh /docker/tmp/fix-hosts.sh"
 
-docker exec -d mes_portal2024_api_1 sh -c "sh /docker/docker-start.sh >> /var/log/docker-start.log 2>&1"
+docker exec -d mes_cdb_api_1 sh -c "sh /docker/docker-start.sh >> /var/log/docker-start.log 2>&1"

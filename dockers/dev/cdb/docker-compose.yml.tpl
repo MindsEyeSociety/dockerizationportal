@@ -8,8 +8,8 @@ services:
       default:
         ipv4_address: 172.16.70.25
     environment:
-      - MYSQL_ROOT_PASSWORD=portal2024
-      - MYSQL_DATABASE=portal2024
+      - MYSQL_ROOT_PASSWORD=cdb
+      - MYSQL_DATABASE=cdb
     depends_on:
       - api
     links:
@@ -28,7 +28,8 @@ services:
     links:
       - db
     volumes:
-      - DEV_REPO_1:/portal2024
+      - DEV_REPO_1:/cdb-api
+      - DEV_REPO_2:/cdb-ui
       - ./docker:/docker
   db:
     image: "mysql:8.0"
@@ -37,9 +38,9 @@ services:
       default:
         ipv4_address: 172.16.70.27
     environment:
-      - MYSQL_ROOT_PASSWORD=portal2024
-      - MYSQL_DATABASE=portal2024
-      - MYSQL_PASSWORD=portal2024
+      - MYSQL_ROOT_PASSWORD=cdb
+      - MYSQL_DATABASE=cdb
+      - MYSQL_PASSWORD=cdb
     volumes:
       - ./var/mysql:/var/lib/mysql
       - ./docker:/docker

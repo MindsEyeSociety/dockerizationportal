@@ -32,7 +32,7 @@ RUN apt install -y nginx
 
 COPY nginx-config-web.conf /etc/nginx/conf.d/default.conf
 
-WORKDIR /portal2024/MES-portal
+WORKDIR /cdb-ui
 
 ENTRYPOINT ["/usr/sbin/nginx", "-g", "daemon off;"]
 
