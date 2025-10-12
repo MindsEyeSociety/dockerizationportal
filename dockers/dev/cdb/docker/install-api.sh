@@ -10,7 +10,7 @@ if [ -f ".env" ]; then
     exit 1
 fi
 
-cp .env-docker .env
+cp .env.docker .env
 echo "Created /cdb-api/.env from /cdb-api/.env-docker"
 
 npm install
