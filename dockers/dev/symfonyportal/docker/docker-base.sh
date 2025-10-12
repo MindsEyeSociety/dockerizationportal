@@ -13,7 +13,7 @@ do
 done
 
 # test database start
-until [ "$(echo "show databases like 'mesportal'" | mysql -uroot -h172.16.70.14 -pmesportal -N 2>/dev/null | wc -l)" -gt 0 ]
+until [ "$(echo "show databases like 'mesportal'" | mysql -uroot -hdb -pmesportal -N 2>/dev/null | wc -l)" -gt 0 ]
 do
   echo "Waiting for database server to start"
   sleep 1
