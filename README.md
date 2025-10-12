@@ -18,6 +18,12 @@ mkdir enigma
 cd enigma
 for i in dockerizationportal symfonyportal cdb-ui cdb-api; do git clone git@github.com:MindsEyeSociety/$i.git; done
 ls -l 
+# switch current branches
+cd cdb-api
+git checkout tg/database-model-cleanup
+cd ../cdb-ui
+git checkout tg/database-model-cleanup
+cd ..
 cd dockerizationportal
 ```
 
@@ -165,6 +171,10 @@ Component API on Terminal Tab
 
 ```bash
 docker exec -it mes_cdb_api_1 /bin/bash
+# First run You can check if installation completed 
+cat /var/log/docker-up.log 
+# should contain < /docker/docker-up.sh - END
+# should not contain any errors
 npm run dev
 ```
 
