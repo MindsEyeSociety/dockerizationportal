@@ -151,6 +151,22 @@ docker ps | grep mes_
 docker ps
 ```
 
+### Start dev serving processes for both components
+
+Component API on Terminal Tab
+
+```bash
+docker exec -it mes_cdb_api_1 /bin/bash
+npm run dev
+```
+
+Comonent UI on Terminal Tab
+
+```bash
+docker exec -it mes_cdb_web_1 /bin/bash
+npm run start
+```
+
 ### Access the CDB interfaces
 Once running, open your browser at:  
 👉 http://cdb.mindseyesociety.dock/  
