@@ -106,6 +106,14 @@ docker ps | grep mes_
 docker ps
 ```
 
+### Acess to Symfonyportal database
+
+You need local mysql client this is CLI client example
+
+```
+mysql -uroot -pmesportal -hnew.db.mindseyesociety.dock mesportal
+```
+
 ### Access the Symfonyportal interface
 Once running, open your browser at:  
 👉 [http://new.portal.mindseyesociety.dock/](http://new.portal.mindseyesociety.dock/) 
@@ -165,6 +173,14 @@ Comonent UI on Terminal Tab
 ```bash
 docker exec -it mes_cdb_web_1 /bin/bash
 npm run start
+```
+
+### Acess to CDB database
+
+You need local mysql client this is CLI client example
+
+```
+mysql -uroot -pcdb -hdb.cdb.mindseyesociety.dock cdb
 ```
 
 ### Access the CDB interfaces
