@@ -131,8 +131,8 @@ This is configuration for **cdb** stack (UI + API).
 ### Link with repos
 
 ```bash
-./console.sh link cdb PATH-TO-REPO-CLONE-cdb-ui 1
-./console.sh link cdb PATH-TO-REPO-CLONE-cdb-api 2
+./console.sh link cdb PATH-TO-REPO-CLONE-cdb-api 1
+./console.sh link cdb PATH-TO-REPO-CLONE-cdb-ui 2
 ```
 
 ### Build the CDB containers
