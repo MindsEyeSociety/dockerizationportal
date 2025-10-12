@@ -1,116 +1,157 @@
 # README @ dockerizationportal
 
-Quick [local development tools based on bash, docker and docker-compose](https://github.com/grzechowski/dockerization)
+Quick [local development tools based on Bash, Docker, and Docker Compose](https://github.com/grzechowski/dockerization).
 
-## Quick steps
+---
 
-Requires docker and docker-compose.
+## 🚀 First Steps
 
-This tool can be refactorized so to move some Dockerfiles into repository and allow further integration of docker into devops environment, this is for local development of more complex microservice architectures with one place of organization in mind and organized configuration framework plus easy usage for non-docker users;
+### Cloning some projects
 
-### First run
+Requires git and access to these projects in github plus your local terminal git/ssh/github configuration.
 
-If you have your projects downloaded into:
-
- * /home/me/workspace/dockerizationportal
- * /home/me/workspace/symfonyportal
-
-```
- $ cd /home/me/workspace/dockerizationportal
- $ ./console.sh link php5.6 /home/me/workspace/symfonyportal
- $ ./console.sh b php5.6
- $ ./console.sh b mail
- $ ./console.sh u mail
- $ ./console.sh u php5.6
+```bash
+cd ~
+mkdir workspace
+cd workspace
+mkdir enigma
+cd enigma
+for i in dockerizationportal symfonyportal cdb-ui cdb-api; do git clone git@github.com:MindsEyeSociety/$i.git; done
+ls -l 
+cd dockerizationportal
 ```
 
-now just copy contents of this into your /etc/hosts
+### Prerequisites
+- [Docker](https://docs.docker.com/get-docker/) installed  
+- [Docker Compose](https://docs.docker.com/compose/install/) installed
 
-```
-$ cat /home/me/workspace/dockerizationportal/dockers/dev/hostnames-dockers
-```
+Your installation procedure may differ depending on OS.
 
-once you copied hosts, you can check
+### Network Setup
+- Add the configuration lines from [./dockers/dev/hostnames-dockers](./dockers/dev/hostnames-dockers) to your system’s `hosts` file.  
+- Ensure you are using the **latest version** of these configuration lines.
 
- * http://portal.mindseyesociety.dock/
- * http://mail.mindseyesociety.dock
-
- in Your browser
-
-### Daily usage
-
-Up 
-
-```
- $ ./console.sh u mail,php5.6
+```bash
+sudo su -
+echo >> /etc/hosts
+cat ./dockers/dev/hostnames-dockers >> /etc/hosts
+exit
 ```
 
-Down
+---
 
-```
- $ ./console.sh d mail,php5.6
-```
+## ⚙️ Usage
 
-## Docker toolkit installation/update
+To open the project console, run:
 
-## Base usage
-
-  ```
-  $ ./console.sh
-  ```
-
-  and it should be more or less self-explanatory. Some examples are available with
-
-  ```
-  $ ./console.sh examples
-  ```
-
-## Latest set of projects configured in dockerization
-
-  ```
-  $ ./console.sh l
-
-  List of available projects:
-
-          dev/mail
-    [b]   dev/project
-
-    [b] - project build use settings
-
-  ```
-
-build settings are located in dockers/[env-name]/[project-name]/docker/.settings
-default build settings are located in dockers/[env-name]/[project-name]/docker/.settings-default
-
-## Setting up dev/ projects
-
-First you need to configure dev/ projects hosts on your local Linux host.
-
- ```
- $ sudo su -
- # cat dockers/dev/hostnames-dockers >> /etc/hosts
- # exit
- ```
-
-Please check if you do not have a local network conflict in regards to IP range
-
-## Linking and build
-
-projects may require your local git code repository as these setups are for project developers
-
-```
-$ ./console.sh l
-
-List of available projects:
-
-        dev/mail
-  [b]   dev/project
-
-  [b] - project build use settings
-
-$ ./console link project PATH-TO-PROJECT-CODE-REPO
-$ ./console b,u mail,project
-
+```bash
+./console.sh
 ```
 
-An example for project linking with repo and building and upping (b,u) of all elements (mail,project)
+If the console starts without errors, your dependencies are properly installed and configured.
+
+---
+
+## 📨 Example: Mailcatcher
+
+### Build the Mailcatcher container
+```bash
+./console.sh b mail
+```
+
+If errors occur, it may indicate that some base libraries have changed and the Dockerfile needs updating. For support, you can [contact @yodahack](https://github.com/yodahack).
+
+### Start the Mailcatcher container
+```bash
+./console.sh u mail
+```
+
+### Verify the container is running
+```bash
+docker ps | grep mes_
+docker ps
+```
+
+### Access the Mailcatcher interface
+Once running, open your browser at:  
+👉 [http://mail.mindseyesociety.dock/](http://mail.mindseyesociety.dock/)  
+
+Mailcatcher can be used with your other Dockerized applications to capture outgoing emails in a safe development environment.
+
+---
+
+## 📦 Example: Symfonyportal
+
+This is configuration for [Symfonyportal project](https://github.com/MindsEyeSociety/symfonyportal).
+
+### Link with repo
+
+```bash
+./console.sh link symfonyportal PATH-TO-REPO-CLONE-Symfonyportal
+```
+
+### Build the Symfonyportal container
+```bash
+./console.sh b symfonyportal
+```
+
+### Up the Symfonyportal container
+```bash
+./console.sh u symfonyportal
+```
+
+### Verify the container is running
+```bash
+docker ps | grep mes_
+docker ps
+```
+
+### Access the Symfonyportal interface
+Once running, open your browser at:  
+👉 [http://new.portal.mindseyesociety.dock/](http://new.portal.mindseyesociety.dock/) 
+
+---
+
+## 🛠 Notes
+- Always keep your Docker images up to date.  
+- Rebuild containers when base images or libraries change. ``./console.sh r PROJECT-NAME``
+- Ensure your `hosts` file matches the latest provided configuration.
+- It is good idea to always put down containers or stop them when you are turning off your workstation ``./console.sh d mail,op``
+- Once You have build multiple projects you can just up them together ``./console.sh u mail,op``
+- If you want to keep live changes in instances ``./console.sh stop mail,op`` ``./console.sh start mail,op``
+
+---
+
+---
+
+## 📦 Example: CDB
+
+This is configuration for **cdb** stack (UI + API).
+
+### Link with repos
+
+```bash
+./console.sh link cdb PATH-TO-REPO-CLONE-cdb-ui 1
+./console.sh link cdb PATH-TO-REPO-CLONE-cdb-api 2
+```
+
+### Build the CDB containers
+```bash
+./console.sh b cdb
+```
+
+### Up the CDB containers
+```bash
+./console.sh u cdb
+```
+
+### Verify the containers are running
+```bash
+docker ps | grep mes_
+docker ps
+```
+
+### Access the CDB interfaces
+Once running, open your browser at:  
+👉 http://cdb.mindseyesociety.dock/  
+👉 http://api.cdb.mindseyesociety.dock/
