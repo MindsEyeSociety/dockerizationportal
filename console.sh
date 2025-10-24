@@ -78,6 +78,15 @@ function ver_hi {
   if ver_eq $v $1; then return 0; fi
   return 1;
 }
+# Cross-platform in-place sed helper (GNU sed vs BSD/macOS sed)
+function sed_inplace() {
+  local expr="$1"; shift
+  if sed --version >/dev/null 2>&1; then
+    sed -i "$expr" "$@"
+  else
+    sed -i '' "$expr" "$@"
+  fi
+}
 
 function console_docker_tools_install_help {
     echo
@@ -412,7 +421,7 @@ function console_repo_link_all_set {
             repos=false
             dev_repo_link_target=$(cat $dev_repo_link)
             SED_VAR=$(sed 's/\//\\\//g' <<< "$dev_repo_link_target")
-            sed -i "s/DEV_REPO_$i/$SED_VAR/g" "$DOCKER_CONSOLE_DOCKERS_DIR_PATH"/"$1"/docker-compose.yml
+            sed_inplace "s/DEV_REPO_$i/$SED_VAR/g" "$DOCKER_CONSOLE_DOCKERS_DIR_PATH"/"$1"/docker-compose.yml
         fi
     done
     if $repos
@@ -558,7 +567,7 @@ function console_docker_settings_preset_check_update {
       return 9;
     fi
     console_info "Updating setting config with $s=$v"
-    sed -i "s/\(^$s.*=\).*/\1$v/" $f
+    sed_inplace "s/\(^$s.*=\).*/\1$v/" $f
   done
   return 0;
 }
