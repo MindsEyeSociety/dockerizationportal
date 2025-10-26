@@ -5,9 +5,9 @@ set -e
 . "$(dirname "$0")/../../../scripts/host/lib/resolve-container-name.sh"
 
 # Example usage
-API_CONTAINER=$(resolve_name mes_cdb_api_1)
-WEB_CONTAINER=$(resolve_name mes_cdb_web_1)
-DB_CONTAINER=$(resolve_name mes_cdb_db_1)
+API_CONTAINER=$(resolve_name mes_cdb mes_cdb_api_1)
+WEB_CONTAINER=$(resolve_name mes_cdb mes_cdb_web_1)
+DB_CONTAINER=$(resolve_name mes_cdb mes_cdb_db_1)
 
 docker exec -d $WEB_CONTAINER sh -c "sh /docker/tmp/fix-hosts.sh"
 docker exec -d $API_CONTAINER sh -c "sh /docker/tmp/fix-hosts.sh"

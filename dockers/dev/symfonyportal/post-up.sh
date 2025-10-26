@@ -5,9 +5,9 @@ set -e
 . "$(dirname "$0")/../../../scripts/host/lib/resolve-container-name.sh"
 
 # Example usage
-FPM_CONTAINER=$(resolve_name mes_symfonyportal_fpm_1)
-WEB_CONTAINER=$(resolve_name mes_symfonyportal_web_1)
-DB_CONTAINER=$(resolve_name mes_symfonyportal_db_1)
+FPM_CONTAINER=$(resolve_name mes_symfonyportal mes_symfonyportal_fpm_1)
+WEB_CONTAINER=$(resolve_name mes_symfonyportal mes_symfonyportal_web_1)
+DB_CONTAINER=$(resolve_name mes_symfonyportal mes_symfonyportal_db_1)
 
 docker exec -d $WEB_CONTAINER sh -c "sh /docker/tmp/fix-hosts.sh"
 docker exec -d $FPM_CONTAINER sh -c "sh /docker/tmp/fix-hosts.sh"

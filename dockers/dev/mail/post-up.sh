@@ -5,7 +5,7 @@ set -e
 . "$(dirname "$0")/../../../scripts/host/lib/resolve-container-name.sh"
 
 # Example usage
-MAIL_CONTAINER=$(resolve_name mes_mail_1)
+MAIL_CONTAINER=$(resolve_name mes mes_mail_1)
 
 docker exec -d $MAIL_CONTAINER bash -c "bash /docker/tmp/fix-hosts.sh"
 
